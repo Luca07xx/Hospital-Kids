@@ -1,0 +1,215 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    min-height: 100vh;
+
+    background: linear-gradient(
+        180deg,
+        #38bdf8 0%,
+        #7dd3fc 45%,
+        #dff6ff 100%
+    );
+}
+
+h1 {
+    text-align: center;
+
+    padding-top: 120px;
+
+    font-family: Arial, sans-serif;
+
+    font-size: 48px;
+
+    color: white;
+
+    text-shadow: 0 5px 0 #1680b5;
+
+    letter-spacing: 3px;
+}
+p {
+    text-align: center;
+
+    margin-top: 15px;
+
+    font-family: Arial, sans-serif;
+
+    font-size: 20px;
+
+    color: #15506d;
+}
+button {
+    display: block;
+
+    margin: 40px auto 0;
+
+    width: 230px;
+    height: 65px;
+
+    border: none;
+    border-radius: 18px;
+
+    background: white;
+
+    color: #1680b5;
+
+    font-size: 25px;
+    font-weight: bold;
+
+    letter-spacing: 1px;
+
+    box-shadow: 0 7px 0 #1680b5;
+
+    cursor: pointer;
+
+    transition: 0.15s;
+}
+button:hover {
+    transform: translateY(-3px);
+}
+button:active {
+    transform: translateY(5px);
+
+    box-shadow: 0 2px 0 #1680b5;
+}
+#telaHospital {
+    display: none;
+}
+#telaHospital {
+    text-align: center;
+
+    padding-top: 100px;
+}
+
+#telaHospital h2 {
+    font-family: Arial, sans-serif;
+
+    font-size: 36px;
+
+    color: white;
+
+    text-shadow: 0 4px 0 #1680b5;
+
+    margin-bottom: 15px;
+}
+
+.salas {
+    display: flex;
+
+    flex-direction: column;
+
+    align-items: center;
+
+    gap: 20px;
+
+    margin-top: 35px;
+}
+
+.salas button {
+    width: 280px;
+
+    height: 70px;
+
+    border: none;
+
+    border-radius: 18px;
+
+    background: white;
+
+    color: #1680b5;
+
+    font-size: 22px;
+
+    font-weight: bold;
+
+    cursor: pointer;
+
+    box-shadow: 0 6px 0 #1680b5;
+
+    transition: 0.15s;
+}
+
+.salas button:hover {
+    transform: translateY(-3px);
+}
+
+.salas button:active {
+    transform: translateY(4px);
+
+    box-shadow: 0 2px 0 #1680b5;
+}
+.jogador-info {
+    display: inline-block;
+
+    padding: 8px 15px;
+
+    margin-bottom: 25px;
+
+    background: white;
+
+    border-radius: 15px;
+
+    color: #1680b5;
+
+    font-size: 18px;
+
+    font-weight: bold;
+
+    box-shadow: 0 4px 0 #1680b5;
+}
+#telaHigiene {
+    display: none;
+
+    text-align: center;
+
+    padding-top: 100px;
+}
+
+#telaHigiene h2 {
+    color: white;
+
+    font-size: 32px;
+
+    text-shadow: 0 4px 0 #1680b5;
+
+    margin-bottom: 15px;
+}
+
+#telaHigiene p {
+    color: #15506d;
+}
+.areaLavagem {
+    margin-top: 35px;
+
+    display: flex;
+
+    flex-direction: column;
+
+    align-items: center;
+
+    gap: 20px;
+}
+
+.torneira {
+    font-size: 70px;
+
+    cursor: pointer;
+}
+
+.maos {
+    font-size: 70px;
+}
+
+#btnComecar {
+    margin-top: 30px;
+}
+.sabao {
+    font-size: 60px;
+
+    cursor: pointer;
+
+    display: none;
+}
