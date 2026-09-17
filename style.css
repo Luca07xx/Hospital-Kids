@@ -78,10 +78,10 @@ button:active {
 #telaHospital {
     display: none;
 }
+
 #telaHospital {
     text-align: center;
-
-    padding-top: 100px;
+    padding-top: 25px;
 }
 
 #telaHospital h2 {
@@ -213,131 +213,405 @@ button:active {
 
     display: none;
 }
-/* ===== MAPA DO HOSPITAL ===== */
+/* ===== MAPA DO JOGO ===== */
 
 .hospital-mapa {
     position: relative;
 
-    width: 90%;
-    max-width: 900px;
-    height: 550px;
+    width: 96%;
+    max-width: 1400px;
+    height: 75vh;
+    min-height: 600px;
+    margin: 10px auto;
 
-    margin: 30px auto;
+    background: #dcefdc;
 
-    background: #f5f5f5;
+    border: 10px solid #ffffff;
+    border-radius: 28px;
 
-    border: 8px solid white;
-    border-radius: 30px;
-
-    box-shadow: 0 10px 0 #1680b5;
+    box-shadow: 0 12px 0 #1680b5;
 
     overflow: hidden;
 }
 
-/* Título dentro do mapa */
 
-.hospital-titulo {
+/* ===== CHÃO ===== */
+
+.hospital-mapa::before {
+    content: "";
     position: absolute;
 
-    top: 20px;
+    inset: 0;
+
+    background:
+        linear-gradient(
+            90deg,
+            rgba(255,255,255,0.18) 2px,
+            transparent 2px
+        ),
+        linear-gradient(
+            rgba(255,255,255,0.18) 2px,
+            transparent 2px
+        );
+
+    background-size: 45px 45px;
+
+    pointer-events: none;
+}
+
+
+/* ===== PAREDES ===== */
+
+.parede {
+    position: absolute;
+
+    background: #ffffff;
+
+    box-shadow: 0 5px 0 #b8c9ce;
+}
+
+.parede-topo {
+    top: 0;
+    left: 0;
+
+    width: 100%;
+    height: 65px;
+}
+
+.parede-esquerda {
+    top: 0;
+    left: 0;
+
+    width: 25px;
+    height: 100%;
+}
+
+.parede-direita {
+    top: 0;
+    right: 0;
+
+    width: 25px;
+    height: 100%;
+}
+
+
+/* ===== CORREDOR ===== */
+
+.corredor {
+    position: absolute;
+
     left: 50%;
+    top: 65px;
+
+    width: 170px;
+    height: 535px;
 
     transform: translateX(-50%);
 
-    background: white;
+    background: #f7f1df;
 
-    padding: 10px 25px;
-
-    border-radius: 15px;
-
-    color: #1680b5;
-
-    font-size: 25px;
-    font-weight: bold;
-
-    box-shadow: 0 5px 0 #1680b5;
+    border-left: 6px solid #d6c9a9;
+    border-right: 6px solid #d6c9a9;
 }
 
-/* Salas */
+
+/* ===== SALAS ===== */
 
 .sala {
     position: absolute;
 
-    width: 180px;
-    height: 120px;
+    width: 230px;
+    height: 175px;
 
-    background: white;
+    background: #f8fbff;
 
-    border: 5px solid #1680b5;
-    border-radius: 20px;
+    border: 7px solid #ffffff;
+    border-radius: 18px;
 
-    display: flex;
-
-    flex-direction: column;
-
-    align-items: center;
-    justify-content: center;
+    box-shadow:
+        0 7px 0 #b8c9ce,
+        inset 0 0 0 4px #d7e8ed;
 
     cursor: pointer;
 
-    transition: 0.2s;
-
-    box-shadow: 0 7px 0 #1680b5;
+    transition: 0.15s;
 }
 
 .sala:hover {
     transform: translateY(-5px);
+    box-shadow:
+        0 12px 0 #b8c9ce,
+        inset 0 0 0 4px #d7e8ed;
 }
 
-/* Ícone da sala */
 
-.icone-sala {
-    font-size: 45px;
-}
+/* ===== PLACAS ===== */
 
-.sala span {
-    margin-top: 5px;
+.placa {
+    position: absolute;
 
-    font-size: 18px;
+    top: 15px;
+    left: 50%;
 
+    transform: translateX(-50%);
+
+    padding: 8px 18px;
+
+    background: #38bdf8;
+
+    color: white;
+
+    font-family: Arial, sans-serif;
+    font-size: 17px;
     font-weight: bold;
 
-    color: #1680b5;
+    border-radius: 10px;
+
+    box-shadow: 0 4px 0 #1680b5;
+
+    white-space: nowrap;
 }
 
-/* Posição das salas */
+
+/* ===== PORTAS ===== */
+
+.porta {
+    position: absolute;
+
+    bottom: -7px;
+    left: 50%;
+
+    width: 65px;
+    height: 70px;
+
+    transform: translateX(-50%);
+
+    background: #b8794b;
+
+    border: 6px solid #8c5a38;
+
+    border-bottom: none;
+
+    border-radius: 12px 12px 0 0;
+}
+
+.porta::after {
+    content: "";
+
+    position: absolute;
+
+    right: 10px;
+    top: 35px;
+
+    width: 8px;
+    height: 8px;
+
+    background: #f5d76e;
+
+    border-radius: 50%;
+}
+
+
+/* ===== DETALHES DAS SALAS ===== */
+
+.sala-detalhe {
+    position: absolute;
+
+    left: 50%;
+    bottom: 25px;
+
+    transform: translateX(-50%);
+
+    font-family: Arial, sans-serif;
+
+    font-size: 14px;
+    font-weight: bold;
+
+    color: #6b7c85;
+}
+
+
+/* ===== POSIÇÃO DAS SALAS ===== */
 
 .sala-higiene {
-    left: 50px;
+    left: 35px;
     top: 100px;
 }
 
 .sala-coracao {
-    right: 50px;
+    right: 35px;
     top: 100px;
 }
 
 .sala-cuidados {
-    left: 50%;
-    bottom: 50px;
-
-    transform: translateX(-50%);
+    left: 35px;
+    bottom: 35px;
 }
 
-/* Personagem */
+
+/* ===== PERSONAGEM ===== */
+
 .personagem {
+    position: absolute;
+
+    left: 50%;
+    top: 55%;
+
+    width: 70px;
+    height: 110px;
+
+    transform: translate(-50%, -50%);
+
+    z-index: 10;
+
+    transition:
+        left 0.05s,
+        top 0.05s;
+
+    filter: drop-shadow(0 5px 2px rgba(0,0,0,0.2));
+}
+
+
+/* cabeça */
+
+.cabeca {
+    position: absolute;
+
+    top: 0;
+    left: 50%;
+
+    width: 40px;
+    height: 40px;
+
+    transform: translateX(-50%);
+
+    background: #f2bd91;
+
+    border: 3px solid #9b684d;
+
+    border-radius: 50%;
+}
+
+
+/* cabelo */
+
+.cabeca::before {
+    content: "";
+
+    position: absolute;
+
+    top: -4px;
+    left: 3px;
+
+    width: 28px;
+    height: 15px;
+
+    background: #3c2b22;
+
+    border-radius: 50% 50% 30% 30%;
+}
+
+
+/* corpo */
+
+.corpo {
+    position: absolute;
+
+    left: 50%;
+    top: 36px;
+
+    width: 38px;
+    height: 45px;
+
+    transform: translateX(-50%);
+
+    background: #ffffff;
+
+    border: 3px solid #1680b5;
+
+    border-radius: 12px;
+}
+
+
+/* símbolo no uniforme */
+
+.corpo::after {
+    content: "+";
+
     position: absolute;
 
     left: 50%;
     top: 50%;
 
-    font-size: 70px;
+    transform: translate(-50%, -50%);
 
-    cursor: pointer;
+    color: #e74c3c;
 
-    user-select: none;
+    font-size: 23px;
+    font-weight: bold;
+}
 
-    transition: left 0.5s, top 0.5s;
+
+/* pernas */
+
+.perna {
+    position: absolute;
+
+    top: 76px;
+
+    width: 12px;
+    height: 20px;
+
+    background: #31506b;
+
+    border-radius: 5px;
+}
+
+.perna-esquerda {
+    left: 13px;
+}
+
+.perna-direita {
+    right: 13px;
+}
+
+
+/* ===== JOYSTICK ===== */
+
+.joystick {
+    position: absolute;
+
+    left: 30px;
+    bottom: 25px;
+
+    width: 125px;
+    height: 125px;
+
+    background: rgba(255,255,255,0.35);
+
+    border: 5px solid rgba(255,255,255,0.8);
+
+    border-radius: 50%;
+
+    display: flex;
+
+    align-items: center;
+    justify-content: center;
+
+    z-index: 20;
+}
+
+.joystick-botao {
+    width: 58px;
+    height: 58px;
+
+    background: #ffffff;
+
+    border: 4px solid #d5e1e5;
+
+    border-radius: 50%;
+
+    box-shadow: 0 6px 0 #1680b5;
 }
 /* ===== JOYSTICK ===== */
 
@@ -370,5 +644,1342 @@ button:active {
 
     box-shadow: 0 5px 0 #1680b5;
 
+    cursor: pointer;
+}
+/* ===== BARRA DE HIGIENE ===== */
+
+.barra-progresso {
+    width: 300px;
+    height: 25px;
+
+    margin: 20px auto;
+
+    background: white;
+
+    border-radius: 20px;
+
+    overflow: hidden;
+
+    display: none;
+}
+
+.progresso {
+    width: 0%;
+    height: 100%;
+
+    background: #38bdf8;
+
+    transition: width 0.1s;
+}
+/* ===== ANIMAÇÃO DO PERSONAGEM ===== */
+
+.personagem.andando {
+    animation: andando 0.25s infinite alternate;
+}
+
+@keyframes andando {
+    from {
+        transform: translate(-50%, -50%) translateY(0);
+    }
+
+    to {
+        transform: translate(-50%, -50%) translateY(-5px);
+    }
+}
+/* ===== BOTÃO DE INTERAÇÃO ===== */
+
+.interacao {
+    position: absolute;
+
+    display: none;
+
+    left: 50%;
+    bottom: 25px;
+
+    transform: translateX(-50%);
+
+    padding: 12px 25px;
+
+    background: #ffffff;
+
+    border: 4px solid #1680b5;
+    border-radius: 15px;
+
+    color: #1680b5;
+
+    font-family: Arial, sans-serif;
+    font-size: 18px;
+    font-weight: bold;
+
+    box-shadow: 0 5px 0 #1680b5;
+
+    cursor: pointer;
+
+    z-index: 999;
+
+    pointer-events: auto;
+
+    animation: aparecer 0.2s ease-out;
+}
+
+.interacao:hover {
+    transform: translateX(-50%) translateY(-3px);
+}
+
+@keyframes aparecer {
+    from {
+        opacity: 0;
+        transform: translateX(-50%) scale(0.8);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateX(-50%) scale(1);
+    }
+}
+/* =================================
+   SALA DE HIGIENE - CENÁRIO
+================================= */
+
+#telaHigiene {
+    display: none;
+    padding: 15px;
+}
+
+.sala-jogo {
+    position: relative;
+
+    width: 96%;
+    max-width: 1100px;
+    height: 75vh;
+    min-height: 600px;
+
+    margin: 10px auto;
+
+    overflow: hidden;
+
+    background: #d8c49b;
+
+    border: 10px solid white;
+    border-radius: 25px;
+
+    box-shadow: 0 12px 0 #1680b5;
+}
+
+
+/* PAREDE */
+
+.sala-jogo::before {
+    content: "";
+
+    position: absolute;
+
+    left: 0;
+    top: 0;
+
+    width: 100%;
+    height: 55%;
+
+    background:
+        linear-gradient(
+            #eef9ff 0%,
+            #eef9ff 90%,
+            #cbdde3 90%,
+            #cbdde3 100%
+        );
+}
+
+
+/* PISO */
+
+.sala-jogo::after {
+    content: "";
+
+    position: absolute;
+
+    left: 0;
+    bottom: 0;
+
+    width: 100%;
+    height: 45%;
+
+    background:
+        linear-gradient(
+            45deg,
+            rgba(255,255,255,.2) 25%,
+            transparent 25%
+        ),
+        #d8c49b;
+
+    background-size: 55px 55px;
+}
+
+
+/* PLACA */
+
+.placa-sala {
+    position: absolute;
+
+    top: 25px;
+    left: 50%;
+
+    transform: translateX(-50%);
+
+    padding: 12px 30px;
+
+    background: white;
+
+    border: 5px solid #1680b5;
+    border-radius: 15px;
+
+    color: #1680b5;
+
+    font-size: 22px;
+    font-weight: bold;
+
+    box-shadow: 0 5px 0 #1680b5;
+
+    z-index: 5;
+}
+
+
+/* ESPELHO */
+
+.espelho {
+    position: absolute;
+
+    top: 110px;
+    left: 12%;
+
+    width: 190px;
+    height: 130px;
+
+    background: #9dd9ee;
+
+    border: 10px solid #ffffff;
+
+    border-radius: 15px;
+
+    box-shadow: 0 6px 0 #9aaeb5;
+
+    z-index: 2;
+}
+
+.reflexo {
+    position: absolute;
+
+    width: 70px;
+    height: 90px;
+
+    top: 20px;
+    left: 55px;
+
+    border-radius: 40px;
+
+    background: rgba(255,255,255,.35);
+}
+
+
+/* PIA */
+
+.pia {
+    position: absolute;
+
+    top: 285px;
+    left: 50%;
+
+    transform: translateX(-50%);
+
+    width: 300px;
+    height: 150px;
+
+    z-index: 5;
+}
+
+
+/* BANCADA */
+
+.pia-bacia {
+    position: absolute;
+
+    left: 0;
+    bottom: 0;
+
+    width: 300px;
+    height: 70px;
+
+    background: white;
+
+    border: 6px solid #b7cbd2;
+
+    border-radius: 15px 15px 25px 25px;
+
+    box-shadow: 0 7px 0 #9aaeb5;
+}
+
+
+/* TORNEIRA */
+
+.torneira {
+    position: absolute;
+
+    left: 50%;
+    top: -25px;
+
+    width: 80px;
+    height: 80px;
+
+    transform: translateX(-50%);
+
+    cursor: pointer;
+
+    z-index: 10;
+}
+
+.bica {
+    position: absolute;
+
+    left: 28px;
+    top: 20px;
+
+    width: 25px;
+    height: 50px;
+
+    border: 8px solid #7d9299;
+    border-bottom: none;
+
+    border-radius: 20px 20px 0 0;
+}
+
+.bica::after {
+    content: "";
+
+    position: absolute;
+
+    left: 18px;
+    bottom: -5px;
+
+    width: 25px;
+    height: 8px;
+
+    background: #7d9299;
+}
+
+
+/* ÁGUA */
+
+.agua {
+    position: absolute;
+
+    left: 48px;
+    top: 68px;
+
+    width: 10px;
+    height: 35px;
+
+    background: #38bdf8;
+
+    border-radius: 0 0 10px 10px;
+
+    opacity: 0;
+}
+
+.torneira:hover .agua {
+    opacity: 1;
+}
+
+
+/* SABONETE */
+
+.sabonete {
+    position: absolute;
+
+    left: 63%;
+    top: 350px;
+
+    width: 55px;
+    height: 45px;
+
+    background: #f6b5cf;
+
+    border: 4px solid #b76b8c;
+
+    border-radius: 12px;
+
+    cursor: pointer;
+
+    z-index: 8;
+
+    display: none;
+
+    box-shadow: 0 5px 0 #b76b8c;
+}
+
+.sabao-tampa {
+    position: absolute;
+
+    top: -10px;
+    left: 8px;
+
+    width: 35px;
+    height: 10px;
+
+    background: #8c9da3;
+
+    border-radius: 5px;
+}
+
+
+/* PERSONAGEM */
+
+.personagem-higiene {
+    position: absolute;
+
+    left: 22%;
+    bottom: 70px;
+
+    width: 55px;
+    height: 85px;
+
+    z-index: 10;
+
+    filter: drop-shadow(0 5px 2px rgba(0,0,0,.2));
+}
+
+
+/* CAIXA DE INSTRUÇÃO */
+
+.caixa-instrucao {
+    position: absolute;
+
+    right: 40px;
+    bottom: 35px;
+
+    width: 330px;
+
+    padding: 18px;
+
+    background: white;
+
+    border: 5px solid #1680b5;
+    border-radius: 18px;
+
+    color: #15506d;
+
+    font-size: 17px;
+    font-weight: bold;
+
+    box-shadow: 0 7px 0 #1680b5;
+
+    z-index: 20;
+}
+
+.caixa-instrucao button {
+    width: 180px;
+    height: 50px;
+
+    margin: 15px auto 0;
+
+    font-size: 18px;
+}
+
+
+/* MÃOS */
+
+.maos {
+    position: absolute;
+
+    left: 50%;
+    bottom: 80px;
+
+    transform: translateX(-50%);
+
+    display: flex;
+
+    gap: 15px;
+
+    cursor: pointer;
+
+    z-index: 15;
+}
+
+.mao {
+    width: 55px;
+    height: 70px;
+
+    background: #f2bd91;
+
+    border: 4px solid #9b684d;
+
+    border-radius: 30px 30px 20px 20px;
+}
+
+.mao-esquerda {
+    transform: rotate(-15deg);
+}
+
+.mao-direita {
+    transform: rotate(15deg);
+}
+
+
+/* BARRA */
+
+.barra-progresso {
+    position: absolute;
+
+    left: 50%;
+    bottom: 30px;
+
+    transform: translateX(-50%);
+
+    width: 300px;
+    height: 25px;
+
+    background: white;
+
+    border: 4px solid #1680b5;
+
+    border-radius: 20px;
+
+    overflow: hidden;
+
+    display: none;
+
+    z-index: 25;
+}
+
+.progresso {
+    width: 0%;
+    height: 100%;
+
+    background: #38bdf8;
+
+    transition: width .1s;
+}
+/* =========================
+   NOVO VISUAL DO JOGO
+========================= */
+
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    background: #bfe8f7;
+}
+
+
+/* =========================
+   TELA INICIAL
+========================= */
+
+#telaInicial {
+    height: 100vh;
+
+    display: flex;
+    flex-direction: column;
+
+    justify-content: center;
+    align-items: center;
+
+    text-align: center;
+
+    background:
+        linear-gradient(
+            #8ed8f5,
+            #dff8ff
+        );
+}
+
+#telaInicial h1 {
+    font-size: 55px;
+    color: #126b94;
+
+    margin: 0 0 10px;
+
+    text-shadow:
+        0 5px 0 white;
+}
+
+#telaInicial p {
+    font-size: 20px;
+    color: #24586b;
+}
+
+#btnJogar {
+    margin-top: 30px;
+
+    width: 220px;
+    height: 65px;
+
+    border: none;
+    border-radius: 18px;
+
+    background: #1680b5;
+    color: white;
+
+    font-size: 22px;
+    font-weight: bold;
+
+    cursor: pointer;
+
+    box-shadow:
+        0 8px 0 #0c5578;
+}
+
+#btnJogar:active {
+    transform: translateY(6px);
+
+    box-shadow:
+        0 2px 0 #0c5578;
+}
+
+
+/* =========================
+   HOSPITAL
+========================= */
+
+#telaHospital {
+    display: none;
+
+    min-height: 100vh;
+
+    background:
+        linear-gradient(
+            #d9f5ff,
+            #a9d8e9
+        );
+
+    padding-top: 15px;
+}
+
+
+/* =========================
+   HUD
+========================= */
+
+.hud {
+    width: 94%;
+    max-width: 1400px;
+
+    margin: auto;
+
+    display: flex;
+
+    justify-content: space-between;
+    align-items: center;
+
+    background: white;
+
+    border: 5px solid #1680b5;
+
+    border-radius: 20px;
+
+    padding: 12px 20px;
+
+    box-sizing: border-box;
+
+    box-shadow:
+        0 6px 0 #1680b5;
+}
+
+.perfil {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+
+    color: #164d63;
+}
+
+.avatar {
+    width: 48px;
+    height: 48px;
+
+    border-radius: 50%;
+
+    background: #f2bd91;
+
+    border: 4px solid #1680b5;
+
+    position: relative;
+}
+
+.avatar::after {
+    content: "";
+
+    position: absolute;
+
+    left: -7px;
+    top: 28px;
+
+    width: 54px;
+    height: 25px;
+
+    background: #ffffff;
+
+    border-radius: 15px 15px 5px 5px;
+}
+
+.nivel {
+    font-size: 13px;
+
+    margin-top: 3px;
+
+    color: #1680b5;
+}
+
+.status {
+    display: flex;
+    gap: 25px;
+
+    font-weight: bold;
+
+    color: #164d63;
+}
+
+
+/* =========================
+   MAPA
+========================= */
+
+.hospital-mapa {
+    position: relative;
+
+    width: 94%;
+    max-width: 1400px;
+
+    height: 75vh;
+    min-height: 600px;
+
+    margin: 20px auto;
+
+    overflow: hidden;
+
+    background: #dcefdc;
+
+    border: 10px solid white;
+
+    border-radius: 28px;
+
+    box-shadow:
+        0 12px 0 #1680b5;
+}
+
+
+/* piso */
+
+.hospital-mapa::before {
+
+    content: "";
+
+    position: absolute;
+
+    inset: 0;
+
+    background:
+        linear-gradient(
+            90deg,
+            rgba(255,255,255,.25) 2px,
+            transparent 2px
+        ),
+        linear-gradient(
+            rgba(255,255,255,.25) 2px,
+            transparent 2px
+        );
+
+    background-size: 50px 50px;
+
+}
+
+
+/* corredor */
+
+.corredor {
+
+    position: absolute;
+
+    left: 37%;
+    top: 0;
+
+    width: 26%;
+    height: 100%;
+
+    background: #f6f6f6;
+
+    border-left: 8px solid white;
+    border-right: 8px solid white;
+
+    z-index: 1;
+}
+
+
+/* =========================
+   SALAS
+========================= */
+
+.sala {
+
+    position: absolute;
+
+    width: 28%;
+    height: 27%;
+
+    background: #ffffff;
+
+    border: 7px solid #1680b5;
+
+    border-radius: 18px;
+
+    z-index: 3;
+
+    cursor: pointer;
+
+    transition: .2s;
+
+    box-shadow:
+        0 7px 0 #9bbbc7;
+}
+
+.sala:hover {
+    transform: scale(1.03);
+}
+
+.sala-higiene {
+    left: 4%;
+    top: 12%;
+}
+
+.sala-coracao {
+    right: 4%;
+    top: 12%;
+}
+
+.sala-cuidados {
+    left: 4%;
+    bottom: 12%;
+}
+
+
+/* placas */
+
+.placa {
+
+    position: absolute;
+
+    top: -18px;
+    left: 50%;
+
+    transform: translateX(-50%);
+
+    padding: 8px 18px;
+
+    background: #1680b5;
+
+    color: white;
+
+    border-radius: 10px;
+
+    font-weight: bold;
+
+    white-space: nowrap;
+}
+
+
+/* porta */
+
+.porta {
+
+    position: absolute;
+
+    right: -15px;
+    top: 50%;
+
+    width: 30px;
+    height: 65px;
+
+    transform: translateY(-50%);
+
+    background: #9c704d;
+
+    border: 5px solid #6d4a31;
+
+    border-radius: 5px;
+}
+
+
+/* cadeado */
+
+.cadeado {
+
+    position: absolute;
+
+    right: 15px;
+    bottom: 12px;
+
+    font-size: 25px;
+}
+
+
+/* =========================
+   OBJETOS
+========================= */
+
+.pia-icon {
+
+    position: absolute;
+
+    left: 25%;
+    bottom: 25px;
+
+    width: 80px;
+    height: 35px;
+
+    background: white;
+
+    border: 5px solid #9aaeb5;
+
+    border-radius: 10px;
+}
+
+.pia-icon::before {
+
+    content: "";
+
+    position: absolute;
+
+    left: 32px;
+    top: -35px;
+
+    width: 12px;
+    height: 35px;
+
+    border: 5px solid #7d9299;
+
+    border-bottom: none;
+
+    border-radius: 10px;
+}
+
+
+.coracao-icon {
+
+    position: absolute;
+
+    left: 50%;
+    top: 50%;
+
+    width: 45px;
+    height: 45px;
+
+    transform:
+        translate(-50%, -50%)
+        rotate(45deg);
+
+    background: #ef6b73;
+
+    border-radius: 8px;
+}
+
+.coracao-icon::before,
+.coracao-icon::after {
+
+    content: "";
+
+    position: absolute;
+
+    width: 45px;
+    height: 45px;
+
+    background: #ef6b73;
+
+    border-radius: 50%;
+}
+
+.coracao-icon::before {
+    left: -23px;
+}
+
+.coracao-icon::after {
+    top: -23px;
+}
+
+
+.maca-icon {
+
+    position: absolute;
+
+    left: 25%;
+    bottom: 35px;
+
+    width: 100px;
+    height: 25px;
+
+    background: #cbd8dd;
+
+    border: 5px solid #7d9299;
+
+    border-radius: 8px;
+}
+
+
+
+/* =========================
+   MISSÃO
+========================= */
+
+.missao {
+
+    position: absolute;
+
+    left: 25px;
+    bottom: 25px;
+
+    width: 270px;
+
+    padding: 15px;
+
+    background: white;
+
+    border: 4px solid #1680b5;
+
+    border-radius: 15px;
+
+    z-index: 30;
+
+    box-shadow:
+        0 6px 0 #1680b5;
+
+    display: flex;
+
+    flex-direction: column;
+
+    gap: 5px;
+}
+
+.missao small {
+    color: #1680b5;
+    font-weight: bold;
+}
+
+.missao strong {
+    color: #174f63;
+}
+
+.missao span {
+    color: #d99000;
+    font-weight: bold;
+}
+
+
+/* =========================
+   INTERAÇÃO
+========================= */
+
+.interacao {
+    position: absolute;
+
+    left: auto;
+    right: 35px;
+    bottom: 35px;
+
+    transform: none;
+
+    padding: 14px 28px;
+
+    background: white;
+    border: 4px solid #1680b5;
+    border-radius: 15px;
+
+    color: #1680b5;
+    font-family: Arial, sans-serif;
+    font-size: 18px;
+    font-weight: bold;
+
+    box-shadow: 0 5px 0 #1680b5;
+
+    cursor: pointer;
+
+    z-index: 999;
+    pointer-events: auto;
+}
+
+
+/* =========================
+   JOYSTICK
+========================= */
+
+.joystick {
+    position: absolute;
+
+    left: 30px;
+    right: auto;
+    bottom: 30px;
+
+    width: 130px;
+    height: 130px;
+
+    z-index: 100;
+}
+
+.joystick-botao {
+
+    position: absolute;
+
+    left: 27px;
+    top: 27px;
+
+    width: 56px;
+    height: 56px;
+
+    background: #1680b5;
+
+    border-radius: 50%;
+}
+
+
+/* =========================
+   RESPONSIVO
+========================= */
+
+@media(max-width: 700px) {
+
+    .hud {
+        font-size: 13px;
+    }
+
+    .status {
+        gap: 10px;
+    }
+
+    .sala {
+        width: 30%;
+    }
+
+    .missao {
+        width: 210px;
+        font-size: 12px;
+    }
+
+}
+/* ==========================
+   ANIMAÇÕES
+========================== */
+
+.agua.correndo {
+
+    opacity: 1;
+
+    animation:
+        fluxoAgua .25s infinite alternate;
+}
+
+@keyframes fluxoAgua {
+
+    from {
+        transform: scaleY(.6);
+    }
+
+    to {
+        transform: scaleY(1);
+    }
+
+}
+
+
+.maos.esfregando .mao-esquerda {
+
+    animation:
+        esfregaEsquerda .25s infinite alternate;
+}
+
+.maos.esfregando .mao-direita {
+
+    animation:
+        esfregaDireita .25s infinite alternate;
+}
+
+
+@keyframes esfregaEsquerda {
+
+    from {
+        transform: translateX(-5px) rotate(-15deg);
+    }
+
+    to {
+        transform: translateX(8px) rotate(15deg);
+    }
+
+}
+
+
+@keyframes esfregaDireita {
+
+    from {
+        transform: translateX(5px) rotate(15deg);
+    }
+
+    to {
+        transform: translateX(-8px) rotate(-15deg);
+    }
+
+}
+
+
+/* ===== CAIXA DE DESAFIO ===== */
+
+.caixa-instrucao {
+    position: absolute;
+
+    right: 35px;
+    bottom: 35px;
+
+    width: 330px;
+    min-height: 130px;
+
+    padding: 18px;
+
+    background: white;
+
+    border: 5px solid #1680b5;
+    border-radius: 18px;
+
+    color: #15506d;
+
+    font-size: 17px;
+    font-weight: bold;
+
+    box-shadow: 0 7px 0 #1680b5;
+
+    z-index: 100;
+}
+
+
+/* ===== RESPONSIVO PARA CELULAR ===== */
+
+@media (max-width: 700px) {
+
+    .joystick {
+        left: 15px;
+        bottom: 20px;
+
+        width: 105px;
+        height: 105px;
+    }
+
+    .interacao {
+        right: 15px;
+        bottom: 20px;
+
+        padding: 11px 18px;
+        font-size: 15px;
+    }
+
+}
+/* ===== ORGANIZAÇÃO DO MAPA ===== */
+
+.joystick {
+    position: absolute !important;
+    left: 30px !important;
+    bottom: 30px !important;
+
+    width: 130px;
+    height: 130px;
+
+    z-index: 100;
+}
+
+
+/* MISSÃO - fica acima do joystick */
+
+.missao {
+    position: absolute !important;
+
+    left: 190px !important;
+    bottom: 30px !important;
+
+    width: 260px;
+
+    padding: 15px;
+
+    background: white;
+    border: 4px solid #1680b5;
+    border-radius: 15px;
+
+    box-shadow: 0 5px 0 #1680b5;
+
+    z-index: 90;
+
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+}
+
+
+/* BOTÃO ENTRAR */
+
+.interacao {
+    position: absolute !important;
+
+    left: 50% !important;
+    right: auto !important;
+    bottom: 30px !important;
+
+    transform: translateX(-50%) !important;
+
+    z-index: 999 !important;
+}
+
+
+/* CELULAR */
+
+@media (max-width: 700px) {
+
+    .joystick {
+        left: 15px !important;
+        bottom: 20px !important;
+
+        width: 105px;
+        height: 105px;
+    }
+
+    .missao {
+        left: 135px !important;
+        bottom: 20px !important;
+
+        width: 190px;
+
+        font-size: 13px;
+    }
+
+    .interacao {
+        bottom: 150px !important;
+    }
+
+}
+.personagem img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    display: block;
+}
+.botao-pia {
+    display: none;
+    position: absolute;
+    left: 50%;
+    bottom: 30px;
+    transform: translateX(-50%);
+    z-index: 200;
+    
+    width: 180px;
+    height: 55px;
+    
+    background: white;
+    color: #1680b5;
+    border: 4px solid #1680b5;
+    border-radius: 15px;
+    
+    font-size: 18px;
+    font-weight: bold;
+    
+    box-shadow: 0 5px 0 #1680b5;
     cursor: pointer;
 }

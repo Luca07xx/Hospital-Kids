@@ -12,76 +12,194 @@
 
 <body>
 
+    <!-- TELA INICIAL -->
     <div id="telaInicial">
 
-    <h1>🏥 HOSPITAL KIDS</h1>
+        <h1>HOSPITAL KIDS</h1>
+        <p>Explore. Aprenda. Supere desafios.</p>
 
-    <p>Aprenda brincando!</p>
-
-    <button id="btnJogar">▶ JOGAR</button>
-
-    </div>
-
-<div id="telaHospital">
-
-    <div class="jogador-info">
-        ⭐ Estrelas: 0
-    </div>
-
-    <div class="hospital-mapa">
-
-        <div class="hospital-titulo">
-            🏥 HOSPITAL KIDS
-        </div>
-
-        <div class="sala sala-higiene" id="btnHigiene">
-            <div class="icone-sala">🧼</div>
-            <span>Higiene</span>
-        </div>
-
-        <div class="sala sala-coracao">
-            <div class="icone-sala">❤️</div>
-            <span>Coração</span>
-        </div>
-
-        <div class="sala sala-cuidados">
-            <div class="icone-sala">🌡️</div>
-            <span>Cuidados</span>
-        </div>
-
-        <div class="joystick" id="joystick">
-            <div class="joystick-botao" id="joystickBotao"></div>
-        </div>
-
-        <div class="personagem" id="personagem">
-            🧑
-        </div>
+        <button id="btnJogar">JOGAR</button>
 
     </div>
 
-</div>
 
+    <!-- HOSPITAL -->
+    <div id="telaHospital">
+
+        <!-- HUD -->
+        <div class="hud">
+
+            <div class="perfil">
+                <div class="avatar"></div>
+
+                <div>
+                    <strong>Enfermeiro(a) Júnior</strong>
+                    <div class="nivel">Nível 1</div>
+                </div>
+            </div>
+
+            <div class="status">
+
+                <div>
+                    ⭐ <span id="estrelas">0</span>
+                </div>
+
+                <div>
+                    XP <span id="xp">0</span>/100
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <!-- MAPA -->
+        <div class="hospital-mapa">
+
+            <div class="corredor"></div>
+
+            <div class="sala sala-higiene" id="btnHigiene">
+                <div class="porta"></div>
+                <div class="placa">HIGIENE</div>
+                <div class="objeto pia-icon"></div>
+            </div>
+
+
+            <div class="sala sala-coracao" id="btnCoracao">
+
+                <div class="porta"></div>
+                <div class="placa">CORAÇÃO</div>
+
+                <div class="coracao-icon"></div>
+
+                <div class="cadeado">🔒</div>
+
+            </div>
+
+
+            <div class="sala sala-cuidados" id="btnCuidados">
+
+                <div class="porta"></div>
+                <div class="placa">CUIDADOS</div>
+
+                <div class="maca-icon"></div>
+
+                <div class="cadeado">🔒</div>
+
+            </div>
+
+            <!-- PERSONAGEM -->
+            <div class="personagem" id="personagem">
+
+                <img src="itachi.png" alt="Personagem">
+                
+            </div>
+
+            <!-- INTERAÇÃO -->
+            <button class="interacao" id="interacao">
+                ENTRAR
+            </button>
+
+
+            <!-- JOYSTICK -->
+            <div class="joystick" id="joystick">
+
+                <div
+                    class="joystick-botao"
+                    id="joystickBotao">
+                </div>
+
+            </div>
+
+
+            <!-- MISSÃO -->
+            <div class="missao">
+
+                <small>MISSÃO ATUAL</small>
+
+                <strong>
+                    Complete o treinamento de higiene
+                </strong>
+
+                <span>
+                    +100 XP
+                </span>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <!-- SALA DE HIGIENE -->
     <div id="telaHigiene">
 
-    <h2>🧼 HIGIENE DAS MÃOS</h2>
+        <div class="sala-jogo">
 
-    <p>Vamos aprender a lavar as mãos!</p>
+            <button id="btnUsarPia" class="botao-pia">
+                USAR PIA
+            </button>
 
-    <div class="areaLavagem">
+            <div class="placa-sala">
+                TREINAMENTO DE HIGIENE
+            </div>
 
-    <div class="torneira" id="torneira">🚰</div>
+            <div id="localPersonagemHigiene"></div>
 
-    <div class="maos">👐</div>
+            <div class="espelho">
+                <div class="reflexo"></div>
+            </div>
 
-    <div class="sabao" id="sabao">🧼</div>
+            <div class="pia">
 
-</div>
+                <div class="torneira" id="torneira">
+                    <div class="bica"></div>
+                    <div class="agua"></div>
+                </div>
 
-<button id="btnComecar">COMEÇAR</button>
+                <div class="pia-bacia"></div>
 
-<p id="instrucaoHigiene"></p>
+            </div>
 
-</div>
+            <div class="sabonete" id="sabao">
+                <div class="sabao-tampa"></div>
+            </div>
+
+            <div class="caixa-instrucao">
+
+                <div id="instrucaoHigiene">
+                    Prepare-se para o desafio.
+                </div>
+
+                <button id="btnComecar">
+                    COMEÇAR
+                </button>
+
+            </div>
+
+
+            <div class="maos">
+
+                <div class="mao mao-esquerda"></div>
+                <div class="mao mao-direita"></div>
+
+            </div>
+
+
+            <div class="barra-progresso">
+
+                <div
+                    class="progresso"
+                    id="progresso">
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
 
     <script src="script.js"></script>
 

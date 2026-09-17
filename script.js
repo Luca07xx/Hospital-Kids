@@ -1,155 +1,511 @@
-const botaoJogar = document.getElementById("btnJogar");
+// ==============================
+// TELAS
+// ==============================
 
 const telaInicial = document.getElementById("telaInicial");
-
 const telaHospital = document.getElementById("telaHospital");
-
-botaoJogar.addEventListener("click", function() {
-
-    telaInicial.style.display = "none";
-
-    telaHospital.style.display = "block";
-
-});
-const botaoHigiene = document.getElementById("btnHigiene");
-
 const telaHigiene = document.getElementById("telaHigiene");
+const btnUsarPia =
+    document.getElementById("btnUsarPia");
 
 
-botaoHigiene.addEventListener("click", function() {
+// ==============================
+// PERSONAGEM
+// ==============================
 
-    telaHospital.style.display = "none";
-
-    telaHigiene.style.display = "block";
-
-});
-const botaoComecar = document.getElementById("btnComecar");
-
-const instrucaoHigiene = document.getElementById("instrucaoHigiene");
-
-
-botaoComecar.addEventListener("click", function() {
-
-    instrucaoHigiene.textContent = "💧 Clique na torneira para começar!";
-
-});
-const torneira = document.getElementById("torneira");
-
-torneira.addEventListener("click", function() {
-
-    instrucaoHigiene.textContent = "🧼 Muito bem! Agora coloque sabão nas mãos.";
-
-});
-const sabao = document.getElementById("sabao");
-
-torneira.addEventListener("click", function() {
-
-    instrucaoHigiene.textContent = "🧼 Muito bem! Agora coloque sabão nas mãos.";
-
-    sabao.style.display = "block";
-
-});
 const personagem = document.getElementById("personagem");
+
+const localPersonagemHigiene =
+    document.getElementById("localPersonagemHigiene");
+
+const mapa =
+    document.querySelector(".hospital-mapa");
 
 let posicaoX = 50;
 let posicaoY = 50;
 
-document.addEventListener("keydown", function(evento) {
+let posicaoHigiene = 5;
 
-    if (evento.key === "ArrowUp") {
-        posicaoY -= 3;
+
+// ==============================
+// JOGADOR
+// ==============================
+
+let xp = 0;
+let estrelas = 0;
+
+const textoXP = document.getElementById("xp");
+const textoEstrelas = document.getElementById("estrelas");
+
+function ganharXP(valor) {
+    xp += valor;
+
+    if (xp >= 100) {
+        xp -= 100;
     }
 
-    if (evento.key === "ArrowDown") {
-        posicaoY += 3;
+    textoXP.textContent = xp;
+}
+
+function ganharEstrela() {
+    estrelas++;
+    textoEstrelas.textContent = estrelas;
+}
+
+
+// ==============================
+// BOTÃO JOGAR
+// ==============================
+
+document
+    .getElementById("btnJogar")
+    .addEventListener("click", function() {
+
+        telaInicial.style.display = "none";
+        telaHospital.style.display = "block";
+
+    });
+
+
+// ==============================
+// ELEMENTOS
+// ==============================
+
+const salaHigiene =
+    document.getElementById("btnHigiene");
+
+const interacao =
+    document.getElementById("interacao");
+
+
+// ==============================
+// ENTRAR NA SALA
+// ==============================
+
+function entrarNaSala() {
+
+    telaHospital.style.display = "none";
+    telaHigiene.style.display = "block";
+
+    // Coloca o MESMO personagem dentro da sala
+    localPersonagemHigiene.appendChild(personagem);
+
+    // Posição inicial dentro da sala
+    posicaoHigiene = 5;
+
+    personagem.style.left = posicaoHigiene + "%";
+    personagem.style.top = "auto";
+    personagem.style.bottom = "90px";
+
+    interacao.style.display = "none";
+}
+
+
+// Clique diretamente na sala
+salaHigiene.addEventListener(
+    "click",
+    entrarNaSala
+);
+
+
+// ==============================
+// MOVIMENTO DO PERSONAGEM
+// ==============================
+
+document.addEventListener(
+    "keydown",
+    function(evento) {
+
+
+        // ==========================
+        // MAPA DO HOSPITAL
+        // ==========================
+
+        if (telaHospital.style.display === "block") {
+
+            let andando = false;
+
+
+            if (evento.key === "ArrowUp") {
+                posicaoY -= 3;
+                andando = true;
+            }
+
+            if (evento.key === "ArrowDown") {
+                posicaoY += 3;
+                andando = true;
+            }
+
+            if (evento.key === "ArrowLeft") {
+                posicaoX -= 3;
+                andando = true;
+            }
+
+            if (evento.key === "ArrowRight") {
+                posicaoX += 3;
+                andando = true;
+            }
+
+
+            if (!andando) {
+                return;
+            }
+
+
+            posicaoX =
+                Math.max(8, Math.min(92, posicaoX));
+
+            posicaoY =
+                Math.max(15, Math.min(85, posicaoY));
+
+
+            personagem.style.left =
+                posicaoX + "%";
+
+            personagem.style.top =
+                posicaoY + "%";
+
+
+            verificarProximidade();
+
+            return;
+        }
+
+
+        // ==========================
+        // SALA DE HIGIENE
+        // ==========================
+
+        if (telaHigiene.style.display === "block") {
+
+
+            if (evento.key === "ArrowLeft") {
+
+                posicaoHigiene -= 3;
+
+            }
+
+
+            if (evento.key === "ArrowRight") {
+
+                posicaoHigiene += 3;
+
+            }
+
+
+            // Limites
+            posicaoHigiene =
+                Math.max(
+                    3,
+                    Math.min(92, posicaoHigiene)
+                );
+
+
+            personagem.style.left =
+                posicaoHigiene + "%";
+
+
+            verificarPia();
+
+        }
+
+    }
+);
+
+
+// ==============================
+// PROXIMIDADE DA SALA
+// ==============================
+
+function verificarProximidade() {
+
+    const personagemRect =
+        personagem.getBoundingClientRect();
+
+    const salaRect =
+        salaHigiene.getBoundingClientRect();
+
+
+    const personagemX =
+        personagemRect.left +
+        personagemRect.width / 2;
+
+    const personagemY =
+        personagemRect.top +
+        personagemRect.height / 2;
+
+
+    const salaX =
+        salaRect.left +
+        salaRect.width / 2;
+
+    const salaY =
+        salaRect.top +
+        salaRect.height / 2;
+
+
+    const distancia =
+        Math.sqrt(
+
+            Math.pow(
+                personagemX - salaX,
+                2
+            )
+
+            +
+
+            Math.pow(
+                personagemY - salaY,
+                2
+            )
+
+        );
+
+
+    if (distancia < 220) {
+
+        interacao.textContent = "ENTRAR";
+
+        interacao.style.display = "block";
+
+    } else {
+
+        interacao.style.display = "none";
+
     }
 
-    if (evento.key === "ArrowLeft") {
-        posicaoX -= 3;
+}
+
+
+// ==============================
+// PROXIMIDADE DA PIA
+// ==============================
+
+function verificarPia() {
+
+    if (
+        posicaoHigiene >= 40 &&
+        posicaoHigiene <= 60
+    ) {
+
+        btnUsarPia.style.display = "block";
+
+    } else {
+
+        btnUsarPia.style.display = "none";
+
     }
+}
 
-    if (evento.key === "ArrowRight") {
-        posicaoX += 3;
+
+// ==============================
+// BOTÃO DE INTERAÇÃO
+// ==============================
+
+interacao.addEventListener(
+    "click",
+    function() {
+
+        // Se estiver no mapa
+        if (telaHospital.style.display === "block") {
+
+            entrarNaSala();
+
+            return;
+        }
+
+
+        // Se estiver na sala
+        if (telaHigiene.style.display === "block") {
+
+            if (
+                posicaoHigiene >= 40 &&
+                posicaoHigiene <= 60
+            ) {
+
+                interacao.style.display = "none";
+
+                instrucao.textContent =
+                    "Você está na pia. Comece o desafio!";
+
+            }
+
+        }
+
     }
+);
 
-    // Limites do mapa
-    if (posicaoX < 8) {
-        posicaoX = 8;
+
+// ==============================
+// MINIGAME
+// ==============================
+
+const botaoComecar =
+    document.getElementById("btnComecar");
+
+const instrucao =
+    document.getElementById("instrucaoHigiene");
+
+const torneira =
+    document.getElementById("torneira");
+
+const sabao =
+    document.getElementById("sabao");
+
+const maos =
+    document.querySelector(".maos");
+
+const progresso =
+    document.getElementById("progresso");
+
+const barra =
+    document.querySelector(".barra-progresso");
+
+const agua =
+    document.querySelector(".agua");
+
+
+let etapa = 0;
+let progressoAtual = 0;
+
+
+// ==============================
+// COMEÇAR DESAFIO
+// ==============================
+
+botaoComecar.addEventListener(
+    "click",
+    function() {
+
+        etapa = 1;
+
+        progressoAtual = 0;
+
+        progresso.style.width = "0%";
+
+        instrucao.textContent =
+            "Abra a torneira.";
+
     }
+);
 
-    if (posicaoX > 92) {
-        posicaoX = 92;
+
+// ==============================
+// TORNEIRA
+// ==============================
+
+torneira.addEventListener(
+    "click",
+    function() {
+
+        if (etapa === 1) {
+
+            etapa = 2;
+
+            agua.classList.add("correndo");
+
+            sabao.style.display = "block";
+
+            instrucao.textContent =
+                "Pegue o sabonete.";
+
+            return;
+        }
+
+
+        if (etapa === 4) {
+
+            etapa = 5;
+
+            agua.classList.remove("correndo");
+
+            progresso.style.width = "100%";
+
+            instrucao.textContent =
+                "Desafio concluído!";
+
+            ganharXP(100);
+
+            ganharEstrela();
+
+        }
+
     }
+);
 
-    if (posicaoY < 15) {
-        posicaoY = 15;
+
+// ==============================
+// SABÃO
+// ==============================
+
+sabao.addEventListener(
+    "click",
+    function() {
+
+        if (etapa !== 2) {
+            return;
+        }
+
+
+        etapa = 3;
+
+        sabao.style.display = "none";
+
+        barra.style.display = "block";
+
+        maos.classList.add("esfregando");
+
+        instrucao.textContent =
+            "Esfregue as mãos.";
+
     }
+);
 
-    if (posicaoY > 85) {
-        posicaoY = 85;
+
+// ==============================
+// MÃOS
+// ==============================
+
+maos.addEventListener(
+    "click",
+    function() {
+
+        if (etapa !== 3) {
+            return;
+        }
+
+
+        progressoAtual += 10;
+
+
+        progresso.style.width =
+            progressoAtual + "%";
+
+
+        if (progressoAtual >= 100) {
+
+            progressoAtual = 100;
+
+            etapa = 4;
+
+            maos.classList.remove(
+                "esfregando"
+            );
+
+            instrucao.textContent =
+                "Agora enxágue as mãos.";
+
+        }
+
     }
+);
 
-    personagem.style.left = posicaoX + "%";
-    personagem.style.top = posicaoY + "%";
+//USAR A PIA
+btnUsarPia.addEventListener("click", function() {
 
-});
-// ===== JOYSTICK DO CELULAR =====
+    btnUsarPia.style.display = "none";
 
-const joystick = document.getElementById("joystick");
-const joystickBotao = document.getElementById("joystickBotao");
+    instrucao.textContent =
+        "Você chegou à pia! Comece o desafio.";
 
-let joystickAtivo = false;
-
-joystick.addEventListener("touchstart", function(evento) {
-    evento.preventDefault();
-
-    joystickAtivo = true;
-});
-
-joystick.addEventListener("touchmove", function(evento) {
-    if (!joystickAtivo) return;
-
-    evento.preventDefault();
-
-    const toque = evento.touches[0];
-
-    const area = joystick.getBoundingClientRect();
-
-    const centroX = area.left + area.width / 2;
-    const centroY = area.top + area.height / 2;
-
-    let deslocamentoX = toque.clientX - centroX;
-    let deslocamentoY = toque.clientY - centroY;
-
-    const distancia = Math.sqrt(
-        deslocamentoX * deslocamentoX +
-        deslocamentoY * deslocamentoY
-    );
-
-    const limite = 35;
-
-    if (distancia > limite) {
-        deslocamentoX = deslocamentoX / distancia * limite;
-        deslocamentoY = deslocamentoY / distancia * limite;
-    }
-
-    joystickBotao.style.transform =
-        `translate(${deslocamentoX}px, ${deslocamentoY}px)`;
-
-    posicaoX += deslocamentoX / 100;
-    posicaoY += deslocamentoY / 100;
-
-    // Limites do mapa
-    posicaoX = Math.max(8, Math.min(92, posicaoX));
-    posicaoY = Math.max(15, Math.min(85, posicaoY));
-
-    personagem.style.left = posicaoX + "%";
-    personagem.style.top = posicaoY + "%";
-});
-
-joystick.addEventListener("touchend", function() {
-
-    joystickAtivo = false;
-
-    joystickBotao.style.transform = "translate(0, 0)";
 });
