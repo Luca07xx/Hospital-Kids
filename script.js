@@ -599,6 +599,111 @@ joystick.addEventListener("touchend", function(evento) {
 }, { passive: false });
 
 // ==============================
+// MOVIMENTO PELO JOYSTICK
+// ==============================
+
+function moverEsquerda() {
+
+    if (telaHospital.style.display === "block") {
+
+        posicaoX -= 2;
+
+        posicaoX =
+            Math.max(8, Math.min(92, posicaoX));
+
+        personagem.style.left =
+            posicaoX + "%";
+
+        verificarProximidade();
+
+        return;
+    }
+
+
+    if (telaHigiene.style.display === "block") {
+
+        posicaoHigiene -= 2;
+
+        posicaoHigiene =
+            Math.max(3, Math.min(92, posicaoHigiene));
+
+        personagem.style.left =
+            posicaoHigiene + "%";
+
+        verificarPia();
+    }
+}
+
+
+function moverDireita() {
+
+    if (telaHospital.style.display === "block") {
+
+        posicaoX += 2;
+
+        posicaoX =
+            Math.max(8, Math.min(92, posicaoX));
+
+        personagem.style.left =
+            posicaoX + "%";
+
+        verificarProximidade();
+
+        return;
+    }
+
+
+    if (telaHigiene.style.display === "block") {
+
+        posicaoHigiene += 2;
+
+        posicaoHigiene =
+            Math.max(3, Math.min(92, posicaoHigiene));
+
+        personagem.style.left =
+            posicaoHigiene + "%";
+
+        verificarPia();
+    }
+}
+
+
+function moverCima() {
+
+    if (telaHospital.style.display !== "block") {
+        return;
+    }
+
+    posicaoY -= 2;
+
+    posicaoY =
+        Math.max(15, Math.min(85, posicaoY));
+
+    personagem.style.top =
+        posicaoY + "%";
+
+    verificarProximidade();
+}
+
+
+function moverBaixo() {
+
+    if (telaHospital.style.display !== "block") {
+        return;
+    }
+
+    posicaoY += 2;
+
+    posicaoY =
+        Math.max(15, Math.min(85, posicaoY));
+
+    personagem.style.top =
+        posicaoY + "%";
+
+    verificarProximidade();
+}
+
+// ==============================
 // MOVIMENTO DO JOYSTICK
 // ==============================
 
