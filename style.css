@@ -1983,3 +1983,16 @@ body {
     box-shadow: 0 5px 0 #1680b5;
     cursor: pointer;
 }
+/* ==============================
+   CONTROLE TOUCH DO JOYSTICK
+   ============================== */
+
+.joystick {
+    touch-action: none;
+    -webkit-user-select: none;
+    user-select: none;
+}
+
+.joystick-botao {
+    touch-action: none;
+}

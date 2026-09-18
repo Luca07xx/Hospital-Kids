@@ -598,100 +598,61 @@ joystick.addEventListener("touchend", function(evento) {
 
 }, { passive: false });
 
-
 // ==============================
-// FUNÇÕES DE MOVIMENTO
+// MOVIMENTO DO JOYSTICK
 // ==============================
 
-function moverEsquerda() {
+function moverComJoystick(evento) {
 
-    if (telaHospital.style.display === "block") {
+    const rect =
+        joystick.getBoundingClientRect();
 
-        posicaoX -= 2;
+    const centroX =
+        rect.left + rect.width / 2;
 
-        posicaoX =
-            Math.max(8, Math.min(92, posicaoX));
+    const centroY =
+        rect.top + rect.height / 2;
 
-        personagem.style.left =
-            posicaoX + "%";
 
-        verificarProximidade();
+    const distanciaX =
+        evento.clientX - centroX;
 
-        return;
+    const distanciaY =
+        evento.clientY - centroY;
+
+
+    // Movimento horizontal
+    if (Math.abs(distanciaX) > 10) {
+
+        if (distanciaX > 0) {
+
+            moverDireita();
+
+        } else {
+
+            moverEsquerda();
+
+        }
+
     }
 
 
-    if (telaHigiene.style.display === "block") {
+    // Movimento vertical somente no hospital
+    if (
+        telaHospital.style.display === "block" &&
+        Math.abs(distanciaY) > 15
+    ) {
 
-        posicaoHigiene -= 2;
+        if (distanciaY > 0) {
 
-        posicaoHigiene =
-            Math.max(3, Math.min(92, posicaoHigiene));
+            moverBaixo();
 
-        personagem.style.left =
-            posicaoHigiene + "%";
+        } else {
 
-        verificarPia();
-    }
-}
+            moverCima();
 
+        }
 
-function moverDireita() {
-
-    if (telaHospital.style.display === "block") {
-
-        posicaoX += 2;
-
-        posicaoX =
-            Math.max(8, Math.min(92, posicaoX));
-
-        personagem.style.left =
-            posicaoX + "%";
-
-        verificarProximidade();
-
-        return;
     }
 
-
-    if (telaHigiene.style.display === "block") {
-
-        posicaoHigiene += 2;
-
-        posicaoHigiene =
-            Math.max(3, Math.min(92, posicaoHigiene));
-
-        personagem.style.left =
-            posicaoHigiene + "%";
-
-        verificarPia();
-    }
-}
-
-
-function moverCima() {
-
-    posicaoY -= 2;
-
-    posicaoY =
-        Math.max(15, Math.min(85, posicaoY));
-
-    personagem.style.top =
-        posicaoY + "%";
-
-    verificarProximidade();
-}
-
-
-function moverBaixo() {
-
-    posicaoY += 2;
-
-    posicaoY =
-        Math.max(15, Math.min(85, posicaoY));
-
-    personagem.style.top =
-        posicaoY + "%";
-
-    verificarProximidade();
 }
