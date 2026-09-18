@@ -500,7 +500,7 @@ maos.addEventListener(
     }
 );
 
-//USAR A PIA
+//USAR A PIA 
 btnUsarPia.addEventListener("click", function() {
 
     btnUsarPia.style.display = "none";
@@ -509,3 +509,189 @@ btnUsarPia.addEventListener("click", function() {
         "Você chegou à pia! Comece o desafio.";
 
 });
+// ==============================
+// JOYSTICK DO CELULAR
+// ==============================
+
+const joystick = document.getElementById("joystick");
+const joystickBotao = document.getElementById("joystickBotao");
+
+let joystickAtivo = false;
+
+joystick.addEventListener("touchstart", function(evento) {
+
+    evento.preventDefault();
+
+    joystickAtivo = true;
+
+}, { passive: false });
+
+
+joystick.addEventListener("touchmove", function(evento) {
+
+    evento.preventDefault();
+
+    if (!joystickAtivo) {
+        return;
+    }
+
+    const toque = evento.touches[0];
+
+    const rect =
+        joystick.getBoundingClientRect();
+
+    const centroX =
+        rect.left + rect.width / 2;
+
+    const centroY =
+        rect.top + rect.height / 2;
+
+    const distanciaX =
+        toque.clientX - centroX;
+
+    const distanciaY =
+        toque.clientY - centroY;
+
+
+    // Movimento para esquerda/direita
+    if (Math.abs(distanciaX) > 10) {
+
+        if (distanciaX > 0) {
+
+            moverDireita();
+
+        } else {
+
+            moverEsquerda();
+
+        }
+
+    }
+
+
+    // Movimento para cima/baixo no hospital
+    if (
+        telaHospital.style.display === "block" &&
+        Math.abs(distanciaY) > 10
+    ) {
+
+        if (distanciaY > 0) {
+
+            moverBaixo();
+
+        } else {
+
+            moverCima();
+
+        }
+
+    }
+
+}, { passive: false });
+
+
+joystick.addEventListener("touchend", function(evento) {
+
+    evento.preventDefault();
+
+    joystickAtivo = false;
+
+}, { passive: false });
+
+
+// ==============================
+// FUNÇÕES DE MOVIMENTO
+// ==============================
+
+function moverEsquerda() {
+
+    if (telaHospital.style.display === "block") {
+
+        posicaoX -= 2;
+
+        posicaoX =
+            Math.max(8, Math.min(92, posicaoX));
+
+        personagem.style.left =
+            posicaoX + "%";
+
+        verificarProximidade();
+
+        return;
+    }
+
+
+    if (telaHigiene.style.display === "block") {
+
+        posicaoHigiene -= 2;
+
+        posicaoHigiene =
+            Math.max(3, Math.min(92, posicaoHigiene));
+
+        personagem.style.left =
+            posicaoHigiene + "%";
+
+        verificarPia();
+    }
+}
+
+
+function moverDireita() {
+
+    if (telaHospital.style.display === "block") {
+
+        posicaoX += 2;
+
+        posicaoX =
+            Math.max(8, Math.min(92, posicaoX));
+
+        personagem.style.left =
+            posicaoX + "%";
+
+        verificarProximidade();
+
+        return;
+    }
+
+
+    if (telaHigiene.style.display === "block") {
+
+        posicaoHigiene += 2;
+
+        posicaoHigiene =
+            Math.max(3, Math.min(92, posicaoHigiene));
+
+        personagem.style.left =
+            posicaoHigiene + "%";
+
+        verificarPia();
+    }
+}
+
+
+function moverCima() {
+
+    posicaoY -= 2;
+
+    posicaoY =
+        Math.max(15, Math.min(85, posicaoY));
+
+    personagem.style.top =
+        posicaoY + "%";
+
+    verificarProximidade();
+}
+
+
+function moverBaixo() {
+
+    posicaoY += 2;
+
+    posicaoY =
+        Math.max(15, Math.min(85, posicaoY));
+
+    personagem.style.top =
+        posicaoY + "%";
+
+    verificarProximidade();
+}
