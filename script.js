@@ -509,77 +509,67 @@ btnUsarPia.addEventListener("click", function() {
         "Você chegou à pia! Comece o desafio.";
 
 });
-// ==============================
-// JOYSTICK DO CELULAR
-// ==============================
+// ===============================
+// JOYSTICK
+// ===============================
 
 const joystick = document.getElementById("joystick");
 const joystickBotao = document.getElementById("joystickBotao");
 
 let joystickAtivo = false;
 
-joystick.addEventListener("touchstart", function(evento) {
+
+// COMEÇOU A USAR O JOYSTICK
+joystick.addEventListener("pointerdown", function(evento) {
 
     evento.preventDefault();
 
     joystickAtivo = true;
 
-}, { passive: false });
+    joystick.setPointerCapture(evento.pointerId);
+
+});
 
 
-joystick.addEventListener("touchmove", function(evento) {
+// MOVIMENTO DO JOYSTICK
+joystick.addEventListener("pointermove", function(evento) {
+
+    if (!joystickAtivo) return;
 
     evento.preventDefault();
 
-    if (!joystickAtivo) {
-        return;
-    }
+    const rect = joystick.getBoundingClientRect();
 
-    const toque = evento.touches[0];
+    const centroX = rect.left + rect.width / 2;
+    const centroY = rect.top + rect.height / 2;
 
-    const rect =
-        joystick.getBoundingClientRect();
-
-    const centroX =
-        rect.left + rect.width / 2;
-
-    const centroY =
-        rect.top + rect.height / 2;
-
-    const distanciaX =
-        toque.clientX - centroX;
-
-    const distanciaY =
-        toque.clientY - centroY;
+    const distanciaX = evento.clientX - centroX;
+    const distanciaY = evento.clientY - centroY;
 
 
-    // Movimento para esquerda/direita
-    if (Math.abs(distanciaX) > 10) {
+    // MOVIMENTO HORIZONTAL
 
-        if (distanciaX > 0) {
+    if (distanciaX > 10) {
 
-            moverDireita();
+        moverDireita();
 
-        } else {
+    } else if (distanciaX < -10) {
 
-            moverEsquerda();
-
-        }
+        moverEsquerda();
 
     }
 
 
-    // Movimento para cima/baixo no hospital
-    if (
-        telaHospital.style.display === "block" &&
-        Math.abs(distanciaY) > 10
-    ) {
+    // MOVIMENTO VERTICAL
+    // Só funciona no hospital
 
-        if (distanciaY > 0) {
+    if (telaHospital.style.display === "block") {
+
+        if (distanciaY > 10) {
 
             moverBaixo();
 
-        } else {
+        } else if (distanciaY < -10) {
 
             moverCima();
 
@@ -587,51 +577,62 @@ joystick.addEventListener("touchmove", function(evento) {
 
     }
 
-}, { passive: false });
+});
 
 
-joystick.addEventListener("touchend", function(evento) {
-
-    evento.preventDefault();
+// SOLTOU O JOYSTICK
+joystick.addEventListener("pointerup", function(evento) {
 
     joystickAtivo = false;
 
-}, { passive: false });
+    try {
+        joystick.releasePointerCapture(evento.pointerId);
+    } catch (erro) {}
 
-// ==============================
-// MOVIMENTO PELO JOYSTICK
-// ==============================
+});
+
+
+joystick.addEventListener("pointercancel", function() {
+
+    joystickAtivo = false;
+
+});
+
+
+// ===============================
+// MOVIMENTAÇÃO
+// ===============================
 
 function moverEsquerda() {
 
     if (telaHospital.style.display === "block") {
 
-        posicaoX -= 2;
+        posicaoX -= 1;
 
-        posicaoX =
-            Math.max(8, Math.min(92, posicaoX));
+        if (posicaoX < 5) {
+            posicaoX = 5;
+        }
 
-        personagem.style.left =
-            posicaoX + "%";
+        personagem.style.left = posicaoX + "%";
 
         verificarProximidade();
 
-        return;
     }
 
+    else if (telaHigiene.style.display === "block") {
 
-    if (telaHigiene.style.display === "block") {
+        posicaoHigiene -= 1;
 
-        posicaoHigiene -= 2;
+        if (posicaoHigiene < 5) {
+            posicaoHigiene = 5;
+        }
 
-        posicaoHigiene =
-            Math.max(3, Math.min(92, posicaoHigiene));
-
-        personagem.style.left =
-            posicaoHigiene + "%";
+        personagem.style.left = posicaoHigiene + "%";
 
         verificarPia();
+
     }
+
 }
 
 
@@ -639,125 +640,64 @@ function moverDireita() {
 
     if (telaHospital.style.display === "block") {
 
-        posicaoX += 2;
+        posicaoX += 1;
 
-        posicaoX =
-            Math.max(8, Math.min(92, posicaoX));
+        if (posicaoX > 90) {
+            posicaoX = 90;
+        }
 
-        personagem.style.left =
-            posicaoX + "%";
+        personagem.style.left = posicaoX + "%";
 
         verificarProximidade();
 
-        return;
     }
 
+    else if (telaHigiene.style.display === "block") {
 
-    if (telaHigiene.style.display === "block") {
+        posicaoHigiene += 1;
 
-        posicaoHigiene += 2;
+        if (posicaoHigiene > 90) {
+            posicaoHigiene = 90;
+        }
 
-        posicaoHigiene =
-            Math.max(3, Math.min(92, posicaoHigiene));
-
-        personagem.style.left =
-            posicaoHigiene + "%";
+        personagem.style.left = posicaoHigiene + "%";
 
         verificarPia();
+
     }
+
 }
 
 
 function moverCima() {
 
-    if (telaHospital.style.display !== "block") {
-        return;
+    if (telaHospital.style.display !== "block") return;
+
+    posicaoY -= 1;
+
+    if (posicaoY < 5) {
+        posicaoY = 5;
     }
 
-    posicaoY -= 2;
-
-    posicaoY =
-        Math.max(15, Math.min(85, posicaoY));
-
-    personagem.style.top =
-        posicaoY + "%";
+    personagem.style.top = posicaoY + "%";
 
     verificarProximidade();
+
 }
 
 
 function moverBaixo() {
 
-    if (telaHospital.style.display !== "block") {
-        return;
+    if (telaHospital.style.display !== "block") return;
+
+    posicaoY += 1;
+
+    if (posicaoY > 85) {
+        posicaoY = 85;
     }
 
-    posicaoY += 2;
-
-    posicaoY =
-        Math.max(15, Math.min(85, posicaoY));
-
-    personagem.style.top =
-        posicaoY + "%";
+    personagem.style.top = posicaoY + "%";
 
     verificarProximidade();
-}
-
-// ==============================
-// MOVIMENTO DO JOYSTICK
-// ==============================
-
-function moverComJoystick(evento) {
-
-    const rect =
-        joystick.getBoundingClientRect();
-
-    const centroX =
-        rect.left + rect.width / 2;
-
-    const centroY =
-        rect.top + rect.height / 2;
-
-
-    const distanciaX =
-        evento.clientX - centroX;
-
-    const distanciaY =
-        evento.clientY - centroY;
-
-
-    // Movimento horizontal
-    if (Math.abs(distanciaX) > 10) {
-
-        if (distanciaX > 0) {
-
-            moverDireita();
-
-        } else {
-
-            moverEsquerda();
-
-        }
-
-    }
-
-
-    // Movimento vertical somente no hospital
-    if (
-        telaHospital.style.display === "block" &&
-        Math.abs(distanciaY) > 15
-    ) {
-
-        if (distanciaY > 0) {
-
-            moverBaixo();
-
-        } else {
-
-            moverCima();
-
-        }
-
-    }
 
 }

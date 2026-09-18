@@ -1996,3 +1996,26 @@ body {
 .joystick-botao {
     touch-action: none;
 }
+/* ==============================
+   TOUCH DO JOYSTICK
+   ============================== */
+
+.joystick {
+    touch-action: none;
+    -webkit-user-select: none;
+    user-select: none;
+}
+
+.joystick-botao {
+    touch-action: none;
+}
+/* CONTROLE DO JOYSTICK */
+.joystick {
+    touch-action: none;
+    -webkit-user-select: none;
+    user-select: none;
+}
+
+.joystick-botao {
+    touch-action: none;
+}
